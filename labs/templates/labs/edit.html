@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Sergey Pozhilov (GetTemplate.com)">
+
+    <title>Sign up - Progressus Bootstrap template</title>
+
+    <link rel="shortcut icon" href="{% static 'assets/images/gt_favicon.png' %}">
+
+    <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/font-awesome.min.css' %}">
+
+    <!-- Custom styles for our template -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap-theme.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+
+    <script type="text/javascript" src="{% static 'assets/js/jquery1.5.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/jqueryedit.js' %}"></script>
+
+</head>
+<script type="text/javascript" src="{% static 'assets/js/jQuery.headroom.min.js' %}"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#myform :input").change(function () {
+            $("#myform").data("changed", true);
+        });
+    });
+    function mysubmit() {
+        alert($("#myform").data("changed"));
+        if ($("#myform").data("changed")) {
+            alert("输入框修改过！")
+        } else {
+            alert("没有修改过，继续！");
+        }
+    }
+</script>
+<script type="text/javascript">
+    window.onload = function () {
+        // 鼠标移动改变背景,可以通过给每行绑定鼠标移上事件和鼠标移除事件来改变所在行背景色。
+        view();
+    }
+    function view() {
+        var hang = document.getElementsByTagName("tr");
+        for (var i = 1; i < hang.length; i++) {
+            hang[i].onmouseover = function () {
+                this.style.backgroundColor = "#f2f2f2";
+            }
+            hang[i].onmouseout = function () {
+                this.style.backgroundColor = "#fff";
+            }
+        }
+    }
+    // 编写一个函数，供添加按钮调用，动态在表格的最后一行添加子节点；
+
+    //注意双引号“”里面如果又要出现引号应该用单引号‘’代替，或者可以在”之前加一个反斜杠\
+    function addRow() {
+        var newRow = document.createElement("tr");
+        var ibody = document.getElementById("table").lastChild;
+
+        var td1 = document.createElement("td");
+        td1.innerHTML = "<td><input  name=\"last_name\" type=\"text\" width:'20px' /></td>";
+        newRow.appendChild(td1);
+
+        var td2 = document.createElement("td");
+        td2.innerHTML = "<td><input name=\"first_name\" type=\"text\" /></td>";
+        newRow.appendChild(td2);
+
+        var td3 = document.createElement("td");
+        td3.innerHTML = "<a href='javascript:;' onclick='clearRow(this)'>删除</a>";
+        newRow.appendChild(td3);
+
+        ibody.appendChild(newRow);
+        view();
+    }
+
+    // 创建删除函数
+    function clearRow(obj) {
+        //var ibody = document.getElementById("table").lastChild;
+        var c = obj.parentNode.parentNode;
+        c.parentNode.removeChild(c);
+    }
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var tds = $("td input");
+        tds.click(tdclick);
+    });
+    function tdclick() {
+        var td = $(this);
+        //1.取出当前的文本内容并且保存起来
+        var text = td.text();
+        if (text != '删除') {
+            //2. 清除当前的td内容
+            td.html("");//也可以用empty()方法
+            //3.建立一个input标签
+            var input = $("<input>");
+            //4.设置文本框里面的值是改写后的内容
+            input.attr("value", text);
+
+
+            //4.5响应键盘事件，处理回车
+            input.keyup(function (event) {
+                //1.判断是否回车按下
+                //结局不同浏览器获取时间的差异
+                var myEvent = event || window.event;
+                var key = myEvent.keyCode;
+                if (key == 1) {
+                    var inputNode = $(this);
+                    //1.保存当前文本框的内容
+                    var inputText = inputNode.val();
+                    //2.清空td里面的内容
+                    inputNode.parent().html(inputText);
+
+                    td.click(tdclick);
+                }
+            });
+
+            input.blur(function () {
+                var inputNode = $(this);
+                var inputText = inputNode.val();
+                inputNode.parent().html(inputText);
+                td.click(tdclick);
+            });
+
+            //5.把文本框就加入到td里面去
+            td.append(input);
+            //6.需要清除td上面的点击事件
+            //6.5高亮数据
+
+            td.unbind("click");
+            //7.提取文本框里面的值
+            input[0].focus();
+        }
+    }
+</script>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-inverse navbar-fixed-top headroom">
+    <div class="container">
+        <div class="navbar-header">
+            <!-- Button for smallest screens -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+            <a class="navbar-brand" href="index.html"><img src="{% static 'assets/images/logo.png' %}"
+                                                           alt="Progressus HTML5 template"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav pull-right">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">More Pages <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="sidebar-left.html">Left Sidebar</a></li>
+                        <li><a href="sidebar-right.html">Right Sidebar</a></li>
+                    </ul>
+                </li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="active"><a class="btn" href="signin.html">SIGN IN / SIGN UP</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!-- /.navbar -->
+
+<header id="head" class="secondary"></header>
+
+<!-- container -->
+<div class="container">
+
+    <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Registration</li>
+    </ol>
+
+    <div class="row">
+
+        <!-- Article main content -->
+        <article class="col-xs-12 maincontent">
+            <header class="page-header">
+                <h1 class="page-title">Registration</h1>
+            </header>
+
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {% if paper.index %}
+                            <h3 class="thin text-center">修改第{{ paper.index }}条记录</h3>
+                        {% else %}
+                            <h3 class="thin text-center">添加一条新的记录</h3>
+                        {% endif %}
+
+                        <p class="text-center text-muted">Lorem ipsum dolor sit amet, <a href="signin.html">Login</a>
+                            adipisicing elit. Quo nulla quibusdam cum doloremque incidunt nemo sunt a tenetur omnis
+                            odio. </p>
+                        <hr>
+                        <form action="{% url 'labs:edit_action' %}" method="post" id="myform">
+                            {% csrf_token %}
+                            <input type="hidden" name="index" value="{{ paper.index | default:'0' }}">
+                            <div class="top-margin">
+                                <label>论文名称</label> <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name='title' value="{{ paper.title }}">
+                            </div>
+                            <hr>
+
+                            <table border="1" width="30%" id="table" class="table" aling=center cellpadding="0"
+                                   cellspacing="0" name="table">
+                                <caption></caption>
+                                <thead>
+                                <tr>
+                                    <th style="text-align:center;">姓</th>
+                                    <th style="text-align:center;">名</th>
+                                    <th style="text-align:center;">操作</th>
+                                </tr>
+                                </thead>
+
+                                {% if paper.index != '0' %}
+                                    <tr>
+                                    </tr>
+                                    {% for name in paper.autor_name %}
+                                        <tr>
+                                            <td align="center"><input name="last_name" value="{{ name.last_name }}">
+                                            </td>
+                                            <td align="center"><input name="first_name" value="{{ name.first_name }}">
+                                            </td>
+                                            <td align="center"><a href="javascript:;"
+                                                                  onclick="clearRow(this)">删除</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+                                {% else %}
+                                    <tr></tr>
+                                {% endif %}
+
+                            </table>
+                            <input type="button" value="添加" onclick="addRow()"/>
+
+
+                            <div class="top-margin">
+                                <label>发表时间</label>
+                                <input type="text" class="form-control" name='pub_time' value="{{ paper.pub_time }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>发表刊物名称</label>
+                                <input type="text" class="form-control" name='pub_name' value="{{ paper.pub_name }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>类别 </label>
+                                <input type="text" class="form-control" name='category' value="{{ paper.category }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>入藏号</label>
+                                <input type="text" class="form-control" name='accessNum' value="{{ paper.accessNum }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>发表 </label>
+                                <input type="text" class="form-control" name='publish' value="{{ paper.publish }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>是否通信作者 </label>
+                                <input type="text" class="form-control" name='commu_name'
+                                       value="{{ paper.commu_name }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>DOI </label>
+                                <input type="text" class="form-control" name='DOI' value="{{ paper.DOI }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>SCI </label>
+                                <input type="text" class="form-control" name='SCI' value="{{ paper.SCI }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>JCR分区-2015 </label>
+                                <input type="text" class="form-control" name='JCR' value="{{ paper.JCR }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>EI</label>
+                                <input type="text" class="form-control" name='EI' value="{{ paper.EI }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>2010IF </label>
+                                <input type="text" class="form-control" name='tzozif' value="{{ paper.tzozif }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>2015IF </label>
+                                <input type="text" class="form-control" name='tzofif' value="{{ paper.tzofif }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>中科院杂志分区</label>
+                                <input type="text" class="form-control" name='zkymp' value="{{ paper.zkymp }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>5y IF </label>
+                                <input type="text" class="form-control" name='fiyf' value="{{ paper.fiyf }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>是否国内 </label>
+                                <input type="text" class="form-control" name='native' value="{{ paper.native }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>他引 </label>
+                                <input type="text" class="form-control" name='quoted' value="{{ paper.quoted }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>引用 </label>
+                                <input type="text" class="form-control" name='quote' value="{{ paper.quote }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>论文链接 </label>
+                                <input type="text" class="form-control" name='URL' value="{{ paper.URL }}">
+                            </div>
+                            <div class="top-margin">
+                                <label>备注 </label>
+                                <input type="text" class="form-control" name='notes' value="{{ paper.notes }}">
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-4 text-right">
+                                    <button class="btn btn-action" type="submit">确认</button>
+                                </div>
+                                <div class="col-lg-4 text-right">
+                                    <button class="btn btn-action" type="submit">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </article>
+        <!-- /Article -->
+
+    </div>
+</div>    <!-- /container -->
+
+
+<footer id="footer" class="top-space">
+
+    <div class="footer1">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-3 widget">
+                    <h3 class="widget-title">Contact</h3>
+                    <div class="widget-body">
+                        <p>+234 23 9873237<br>
+                            <a href="mailto:#">some.email@somewhere.com</a><br>
+                            <br>
+                            234 Hidden Pond Road, Ashland City, TN 37015
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 widget">
+                    <h3 class="widget-title">Follow me</h3>
+                    <div class="widget-body">
+                        <p class="follow-me-icons clearfix">
+                            <a href=""><i class="fa fa-twitter fa-2"></i></a>
+                            <a href=""><i class="fa fa-dribbble fa-2"></i></a>
+                            <a href=""><i class="fa fa-github fa-2"></i></a>
+                            <a href=""><i class="fa fa-facebook fa-2"></i></a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 widget">
+                    <h3 class="widget-title">Text widget</h3>
+                    <div class="widget-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, dolores, quibusdam
+                            architecto voluptatem amet fugiat nesciunt placeat provident cumque accusamus itaque
+                            voluptate modi quidem dolore optio velit hic iusto vero praesentium repellat commodi ad id
+                            expedita cupiditate repellendus possimus unde?</p>
+                        <p>Eius consequatur nihil quibusdam! Laborum, rerum, quis, inventore ipsa autem repellat
+                            provident assumenda labore soluta minima alias temporibus facere distinctio quas adipisci
+                            nam sunt explicabo officia tenetur at ea quos doloribus dolorum voluptate reprehenderit
+                            architecto sint libero illo et hic.</p>
+                    </div>
+                </div>
+
+            </div> <!-- /row of widgets -->
+        </div>
+    </div>
+
+    <div class="footer2">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6 widget">
+                    <div class="widget-body">
+                        <p class="simplenav">
+                            <a href="#">Home</a> |
+                            <a href="about.html">About</a> |
+                            <a href="sidebar-right.html">Sidebar</a> |
+                            <a href="contact.html">Contact</a> |
+                            <b><a href="signup.html">Sign up</a></b>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 widget">
+                    <div class="widget-body">
+                        <p class="text-right">
+                            Copyright &copy; 2014, Your name. Designed by <a href="http://gettemplate.com/"
+                                                                             rel="designer">gettemplate</a>
+                        </p>
+                    </div>
+                </div>
+
+            </div> <!-- /row of widgets -->
+        </div>
+    </div>
+</footer>
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="{% static 'assets/js/headroom.min.js' %}"></script>
+<script src="{% static 'assets/js/jQuery.headroom.min.js' %}"></script>
+<script src="{% static 'assets/js/template.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+{% load staticfiles %}
+<head>
+    <title>可以编辑的表格</title>
+    <!-- <link type ="text/css" rel="stylesheet" href="css/edit.css" />-->
+    <script type="text/javascript" src="{% static 'assets/js/jquery1.5.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/jqueryedit.js' %}"></script>
+</head>
+<body>
+<table border="1px">
+
+    <tr>
+        <td>编辑</td>
+        <td>表格</td>
+    </tr>
+
+</table>
+<script>
+    $(document).ready(function () {
+        var tds = $("td");
+        tds.click(tdclick);
+    });
+
+
+    function tdclick() {
+        var td = $(this);
+        //1.取出当前的文本内容并且保存起来
+        var text = td.text();
+        //2. 清除当前的td内容
+        td.html("");//也可以用empty()方法
+        //3.建立一个input标签
+        var input = $("<input>");
+        //4.设置文本框里面的值是改写后的内容
+        input.attr("value", text);
+        //4.5响应键盘事件，处理回车
+        input.keyup(function (event) {
+            //1.判断是否回车按下
+            //结局不同浏览器获取时间的差异
+            var myEvent = event || window.event;
+            var key = myEvent.keyCode;
+            if (key == 13) {
+                var inputNode = $(this);
+                //1.保存当前文本框的内容
+                var inputText = inputNode.val();
+                //2.清空td里面的内容
+                inputNode.parent().html(inputText);
+
+                td.click(tdclick);
+            }
+        });
+
+        input.blur(function () {
+            var inputNode = $(this);
+            var inputText = inputNode.val();
+            inputNode.parent().html(inputText);
+            td.click(tdclick);
+        });
+
+        //5.把文本框就加入到td里面去
+        td.append(input);
+        //6.需要清除td上面的点击事件
+        //6.5高亮数据
+
+        td.unbind("click");
+        //7.提取文本框里面的值
+    }
+</script>
+</body>
+</html>

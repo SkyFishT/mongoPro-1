@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>This is a test page</title>
+</head>
+<body>
+    {% for sl in tmp %}
+        <h1>{{ sl.index }}</h1>
+        <h2>{{ sl.pub_time }}</h2>
+        {% for name in sl.autor_name %}
+            <h3>{{ name.first_name }}</h3>
+            <h4>{{ name.last_name }}</h4>
+        {% endfor %}
+    {% endfor %}
+
+
+</body>
+</html>
