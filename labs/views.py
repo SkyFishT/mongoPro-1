@@ -21,6 +21,8 @@ def show(request):
         year = request.GET['year']
         if not year:
             errors.append('Enter a search year.')
+        elif len(year) == -1:
+            return render(request, 'labs/about.html', {'tmp': all, 'error': errors})
         elif len(year) != 4:
             errors.append('Please input a right year number.')
         else:
