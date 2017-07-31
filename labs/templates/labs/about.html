@@ -21,9 +21,36 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
+    <script src="{% static 'assets/js/jquery1.5.js' %}"></script>
 	<script src="{% static 'assets/js/html5shiv.js' %}"></script>
 	<script src="{% static 'assets/js/respond.min.js' %}"></script>
 	<![endif]-->
+    <!--表单js和样式-->
+
+    <style type="text/css">
+/* Border styles */
+#table-1 thead, #table-1 tr {
+border-top-width: 1px;
+border-top-style: solid;
+border-top-color: rgb(220,220,220);
+}
+/* Padding and font style */
+#table-1 td, #table-1 th {
+padding: 5px 10px;
+font-size: 12px;
+font-family: Verdana;
+color: rgb(0,191,255);
+}
+
+/* Alternating background colors */
+#table-1 tr:nth-child(even) {
+background: rgb(220,220,220)
+}
+#table-1 tr:nth-child(odd) {
+background: #FFF
+}
+</style>
+
 </head>
 
 <body>
@@ -34,7 +61,7 @@
             <!-- Button for smallest screens -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span
                     class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
-            <a class="navbar-brand" href="index.html"><img src="{% static 'assets/images/logo.png' %}"
+            <a class="navbar-brand" href="{% url 'labs:index' %}"><img src="{% static 'assets/images/logo.png' %}"
                                                            alt="Progressus HTML5 template"></a>
         </div>
         <div class="navbar-collapse collapse">
@@ -81,26 +108,27 @@
                     {% endfor %}
                 </ul>
             {% endif %}
-            <form role="form" action="" method="get">
+            <form role="form" action="" method="get" id="myform">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="name">发表时间</label>
-                    <select class="form-control">
-                        <option value="2011">2011</option>
-                        <option value="2012">2012</option>
-                        <option value="2013">2013</option>
-                        <option value="2014">2014</option>
-                        <option value="2015">2015</option>
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                    </select>
-                </div>
-                <lable>发表年份
-                    <input type="text" name="year" value="">
-                </lable>
-                <input type="submit" name="提交">
+                <label for="name">发表时间</label>
+                <select class="form-control" name="year" value="" onchange="submitForm()">
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                </select>
             </form>
-            <table class="table" aling=center>
+            <script>
+                function submitForm() {
+                    //获取form表单对象
+                    var form = document.getElementById("myform");
+                    form.submit();//form表单提交
+                }
+            </script>
+            <table aling=center id="table-1">
                 <caption></caption>
                 <thead>
                 <tr>
