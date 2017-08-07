@@ -141,6 +141,7 @@ def query_action(request):
         else:  # 获得相应年份的查询集,年份存在，并且长度正确
             yrst = PpInfor.objects(pub_time=year).order_by('-pub_time')
         # 关键字存在
+        title=''
         if key:
             print key
             result = []
@@ -150,9 +151,13 @@ def query_action(request):
                     result.append(item)
                     continue
                 for name in item.autor_name:
-                    first = name.first_name.lower()
-                    last = name.last_name.lower()
-                    if key in first or key in last:
+                    first = name.first_name
+                    if first:
+                        first=first.lower()
+                    last = name.last_name
+                    if last:
+                        last=last.lower()
+                    if first and last and (key in first or key in last):
                         result.append(item)
             if not result:
                 errors.append('没有找到匹配的文档！')
@@ -160,3 +165,5 @@ def query_action(request):
             result = yrst
         return render(request, 'labs/manage.html', {'tmp': result, 'error': errors})
     return render(request, 'labs/manage.html', {'tmp': all, 'error': errors})
+def sidebar_left(request):
+    return render(request, 'labs/sidebar-left.html')

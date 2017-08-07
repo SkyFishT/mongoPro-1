@@ -11,4 +11,5 @@ urlpatterns =[
     url(r'^edit/(?P<index>\d+)$', views.edit, name='edit_page'),
     url(r'^edit/action$', views.edit_action, name='edit_action'),
     url(r'^delete/(?P<index>\d+)$', views.delete, name='delete'),
+    url(r'^sidebar-left', views.sign, name='sign'),
 ]

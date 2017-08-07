@@ -24,6 +24,30 @@
 	<script src="{% static 'assets/js/html5shiv.js' %}"></script>
 	<script src="{% static 'assets/js/respond.min.js' %}"></script>
 	<![endif]-->
+    <!--表单js和样式-->
+    <style type="text/css">
+/* Border styles */
+#table-1 thead, #table-1 tr {
+border-top-width: 1px;
+border-top-style: solid;
+border-top-color: rgb(220,220,220);
+}
+/* Padding and font style */
+#table-1 td, #table-1 th {
+padding: 5px 10px;
+font-size: 12px;
+font-family: Verdana;
+color: rgb(0,191,255);
+}
+
+/* Alternating background colors */
+#table-1 tr:nth-child(even) {
+background: rgb(220,220,220)
+}
+#table-1 tr:nth-child(odd) {
+background: #FFF
+}
+</style>
 </head>
 
 <body>
@@ -40,7 +64,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav pull-right">
                 <li><a href="{% url 'labs:index' %}">Home</a></li>
-                <li class="active"><a href="{% url 'labs:manage' %}">About</a></li>
+                <li class="active"><a href="{% url 'labs:manage' %}">papers</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">More Pages <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -61,8 +85,8 @@
 <div class="container">
 
     <ol class="breadcrumb">
-        <li><a href="index.html">Home</a></li>
-        <li class="active">About</li>
+        <li><a href="{% url 'labs:index' %}">Home</a></li>
+        <li class="active">papers</li>
     </ol>
 
     <div class="row">
@@ -93,7 +117,7 @@
             <h3>
                 <a href="{% url 'labs:edit_page' '0' %}">添加记录</a>
             </h3>
-            <table class="table" aling=center>
+            <table class="table" aling=center id="table-1">
                 <caption></caption>
                 <thead>
                 <tr>
@@ -115,6 +139,10 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <!--退出编辑-->
+            <form role="form" action="{% url 'labs:show' %}" method="get">
+                <input type="submit" name="sign_out" value="退出">
+            </form>
             </body>
             <p><img src="{% static 'assets/images/mac.jpg' %}" alt="" class="img-rounded pull-right"
                     width="300"></p>
